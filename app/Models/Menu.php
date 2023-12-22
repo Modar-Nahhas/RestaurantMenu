@@ -18,6 +18,12 @@ class Menu extends ApiModel
         static::creating(function (Menu $menu) {
             $menu->checkValidDiscount();
         });
+
+        static::updating(function (Menu $menu) {
+            if ($menu->isDirty('discount_id')) {
+                $menu->checkValidDiscount();
+            }
+        });
     }
 
     protected $fillable = [

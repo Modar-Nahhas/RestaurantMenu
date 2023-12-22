@@ -17,7 +17,8 @@ class Category extends ApiModel
         self::creating(function (Category $category) {
             $category->checkValidDiscount();
         });
-        self::updated(function (Category $category) {
+
+        self::updating(function (Category $category) {
             $category->handleDiscountOnUpdate();
         });
     }
