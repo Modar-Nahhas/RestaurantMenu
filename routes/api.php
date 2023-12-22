@@ -37,7 +37,7 @@ Route::apiResource('/menus', CategoryController::class)->only([
     'index'
 ]);
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/logout', [AuthController::class, 'logout']);
     Route::get('/categories/valid-parents', [CategoryController::class, 'getValidParentCategories']);
     Route::apiResource('/categories', CategoryController::class)->only([
         'store'
