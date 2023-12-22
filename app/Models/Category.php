@@ -83,12 +83,19 @@ class Category extends ApiModel
     {
         if ($this->isDirty('discount_id') && isset($this->discount_id)) {
             $this->checkValidDiscount();
-            $this->children()->whereNull('discount_id')->update([
-                'discount_id' => $this->discount_id
-            ]);
-            $this->items()->whereNull('discount_id')->update([
-                'discount_id' => $this->discount_id
-            ]);
+            if ($this->has_items) {
+                $this->items()->whereNull('discount_id')->update([
+                    'discount_id' => $this->discount_id
+                ]);
+            } else {
+                $children = $this->children()->whereNull('discount_id')->get();
+                foreach ($children as $child) {
+                    $child->update([
+                        'discount_id' => $this->discount_id
+                    ]);
+                }
+            }
+
         }
 
     }
