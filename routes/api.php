@@ -2,6 +2,12 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DiscountController;
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\SubCategoryController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +20,38 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/login', [AuthController::class, 'login']);
+Route::apiResource('/categories', CategoryController::class)->only([
+    'index'
+]);
+Route::apiResource('/sub-categories', CategoryController::class)->only([
+    'index'
+]);
+Route::apiResource('/discounts', CategoryController::class)->only([
+    'index'
+]);
+Route::apiResource('/items', CategoryController::class)->only([
+    'index'
+]);
+Route::apiResource('/menus', CategoryController::class)->only([
+    'index'
+]);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/categories/valid-parents', [CategoryController::class, 'getValidParentCategories']);
+    Route::apiResource('/categories', CategoryController::class)->only([
+        'store'
+    ]);
+    Route::apiResource('/sub-categories', CategoryController::class)->only([
+        'store'
+    ]);
+    Route::apiResource('/discounts', CategoryController::class)->only([
+        'store'
+    ]);
+    Route::apiResource('/items', CategoryController::class)->only([
+        'store'
+    ]);
+    Route::apiResource('/menus', CategoryController::class)->only([
+        'store'
+    ]);
 });
