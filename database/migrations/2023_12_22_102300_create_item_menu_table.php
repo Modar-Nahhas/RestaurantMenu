@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Item::class)->constrained();
             $table->foreignIdFor(\App\Models\Menu::class)->constrained();
             $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrentOnUpdate();
         });
     }
 

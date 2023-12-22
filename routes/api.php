@@ -53,6 +53,6 @@ Route::middleware('auth:sanctum')->group(function () {
         'store'
     ]);
     Route::apiResource('/menus', MenuController::class)->only([
-        'store'
+        'store','update'
     ]);
 });

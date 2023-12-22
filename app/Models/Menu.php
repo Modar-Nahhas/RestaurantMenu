@@ -26,6 +26,10 @@ class Menu extends ApiModel
         });
     }
 
+    protected $casts = [
+        'amount' => 'decimal:2'
+    ];
+
     protected $fillable = [
         'name',
         'discount_id',
@@ -40,7 +44,7 @@ class Menu extends ApiModel
         'totalValue'
     ];
 
-    public function getTotalValueAttribute(): int
+    public function getTotalValueAttribute(): float
     {
         $discountAmount = isset($this->discount_id) ? $this->discount->amount : 0;
         $totalValue = $this->items->sum('price');

@@ -30,7 +30,16 @@ class MenuRequest extends BaseRequest
         } elseif ($this->isMethod('post')) {
             return [
                 'name' => ['required', 'string'],
-                'discount_id' => ['bail', 'integer', 'min:1', 'exists:discounts,id']
+                'discount_id' => ['bail', 'integer', 'min:1', 'exists:discounts,id'],
+                'items' => ['sometimes', 'array'],
+                'items.*' => ['bail', 'integer', 'min:1', 'exists:items,id']
+            ];
+        }elseif ($this->isMethod('put')) {
+            return [
+                'name' => ['somtimes', 'string'],
+                'discount_id' => ['bail', 'integer', 'min:1', 'exists:discounts,id'],
+                'items' => ['sometimes', 'array'],
+                'items.*' => ['bail', 'integer', 'min:1', 'exists:items,id']
             ];
         }
         return [];
