@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\DiscountTypeEnum;
 use App\Models\Scopes\MenuScope;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -13,6 +14,10 @@ class Menu extends ApiModel
     {
         parent::boot();
         static::addGlobalScope(MenuScope::class);
+
+        static::creating(function (Menu $menu) {
+            $menu->checkValidDiscount();
+        });
     }
 
     protected $fillable = [
@@ -49,5 +54,19 @@ class Menu extends ApiModel
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    protected function checkValidDiscount(): void
+    {
+        if (isset($this->discount_id)) {
+            $validDiscount = Discount::query()
+                ->where('id', $this->discount_id)
+                ->where('type', DiscountTypeEnum::AllMenu)
+                ->exists();
+            if (!$validDiscount) {
+                throw new \Exception('Invalid discount for menu');
+            }
+        }
+
     }
 }

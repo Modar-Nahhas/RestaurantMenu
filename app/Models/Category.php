@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\DiscountTypeEnum;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Mapi\Easyapi\Models\ApiModel;
@@ -13,6 +14,9 @@ class Category extends ApiModel
     protected static function boot()
     {
         parent::boot();
+        self::creating(function (Category $category) {
+            $category->checkValidDiscount();
+        });
         self::updated(function (Category $category) {
             $category->handleDiscountOnUpdate();
         });
@@ -50,9 +54,23 @@ class Category extends ApiModel
         return !Category::query()->where('parent_id', $categoryId)->exists();
     }
 
+    protected function checkValidDiscount(): void
+    {
+        if (isset($this->discount_id)) {
+            $validDiscount = Discount::query()
+                ->where('id', $this->discount_id)
+                ->where('type', DiscountTypeEnum::Category)
+                ->exists();
+            if (!$validDiscount) {
+                throw new \Exception('Invalid discount for category');
+            }
+        }
+    }
+
     private function handleDiscountOnUpdate(): void
     {
         if ($this->isDirty('discount_id') && isset($this->discount_id)) {
+            $this->checkValidDiscount();
             $this->children()->whereNull('discount_id')->update([
                 'discount_id' => $this->discount_id
             ]);

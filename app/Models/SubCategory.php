@@ -18,7 +18,6 @@ class SubCategory extends Category
             $subCategory->level = $subCategory->parent->level++;
             $subCategory->validateCreation();
             $subCategory->handleDiscountOnCreation();
-
         });
     }
 
@@ -41,6 +40,8 @@ class SubCategory extends Category
     {
         if (!isset($this->discount_id) && isset($this->parent->discount_id)) {
             $this->discount_id = $this->parent->discount_id;
+        } else {
+            $this->checkValidDiscount();
         }
     }
 
