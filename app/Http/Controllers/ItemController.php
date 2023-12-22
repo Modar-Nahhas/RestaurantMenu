@@ -2,29 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\DiscountRequest;
-use App\Models\Discount;
+use App\Http\Requests\ItemRequest;
+use App\Models\Item;
 
-class DiscountController extends Controller
+class ItemController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(DiscountRequest $request)
+    public function index(ItemRequest $request)
     {
         $data = $request->validated();
-        $discounts = Discount::query()->applyAllFilters($data);
+        $discounts = Item::query()->applyAllFilters($data);
         return self::getJsonResponse('Success', $discounts);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(DiscountRequest $request)
+    public function store(ItemRequest $request)
     {
         $data = $request->validated();
-        $newDiscount = Discount::query()->create();
+        $newDiscount = Item::query()->create();
         return self::getJsonResponse('Success', $newDiscount);
     }
-
 }

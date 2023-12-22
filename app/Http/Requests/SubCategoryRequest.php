@@ -24,7 +24,7 @@ class SubCategoryRequest extends BaseRequest
     {
         if ($this->isMethod('get')) {
             return array_merge($this->getRules, [
-
+                'where_parent_id' => ['bail', 'required', 'integer', 'min:1', 'exists:categories,1']
             ]);
         } elseif ($this->isMethod('post')) {
             return [

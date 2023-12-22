@@ -21,6 +21,10 @@ class SubCategory extends Category
         });
     }
 
+    protected $allowedFilters = [
+        'parent_id'
+    ];
+
     private function validateCreation(): void
     {
         if (!isset($this->parent_id)) {

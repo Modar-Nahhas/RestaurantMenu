@@ -30,6 +30,10 @@ class Category extends ApiModel
         'discount_id'
     ];
 
+    protected $listColumnsToRetrieve = [
+        'id', 'name'
+    ];
+
     public function discount(): BelongsTo
     {
         return $this->belongsTo(Discount::class);
