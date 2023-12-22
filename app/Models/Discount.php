@@ -15,4 +15,8 @@ class Discount extends ApiModel
         'amount',
         'type'
     ];
+
+    protected $allowedFilters = [
+        'type'
+    ];
 }
