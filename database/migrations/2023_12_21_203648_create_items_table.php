@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->unsignedDecimal('price');
-            $table->unsignedDecimal('discount',5)->default(0);
             $table->foreignIdFor(\App\Models\Category::class)->constrained();
             $table->foreignIdFor(\App\Models\Discount::class)->nullable()->constrained();
             $table->timestamp('created_at')->useCurrent();
