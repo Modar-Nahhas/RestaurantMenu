@@ -23,7 +23,7 @@ class ItemController extends Controller
     public function store(ItemRequest $request)
     {
         $data = $request->validated();
-        $newDiscount = Item::query()->create();
+        $newDiscount = Item::query()->create($data);
         return self::getJsonResponse('Success', $newDiscount);
     }
 }

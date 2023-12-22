@@ -30,7 +30,7 @@ class ItemRequest extends BaseRequest
             return [
                 'name' => ['required', 'string'],
                 'description' => ['required', 'string'],
-                'price' => ['required', 'double', 'min:0'],
+                'price' => ['required', 'numeric', 'min:0'],
                 'category_id' => ['bail', 'required', 'integer', 'min:1', 'exists:categories,id'],
                 'discount_id' => ['bail', 'integer', 'min:1', 'exists:discounts,id']
             ];

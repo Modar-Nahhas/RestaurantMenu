@@ -23,7 +23,7 @@ class DiscountController extends Controller
     public function store(DiscountRequest $request)
     {
         $data = $request->validated();
-        $newDiscount = Discount::query()->create();
+        $newDiscount = Discount::query()->create($data);
         return self::getJsonResponse('Success', $newDiscount);
     }
 

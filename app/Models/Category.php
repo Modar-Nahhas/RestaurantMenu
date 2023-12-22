@@ -23,6 +23,13 @@ class Category extends ApiModel
         });
     }
 
+    protected $casts = [
+        'level' => 'int',
+        'parent_id' => 'int',
+        'has_items' => 'bool',
+        'discount_id' => 'int'
+    ];
+
     protected $fillable = [
         'name',
         'parent_id',

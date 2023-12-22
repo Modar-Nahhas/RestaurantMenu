@@ -15,7 +15,9 @@ class SubCategory extends Category
 
         static::creating(function (SubCategory $subCategory) {
             $subCategory->load('parent');
-            $subCategory->level = $subCategory->parent->level++;
+            $subCategory->forceFill([
+                'level' => ++$subCategory->parent->level
+            ]);
             $subCategory->validateCreation();
             $subCategory->handleDiscountOnCreation();
         });
@@ -34,7 +36,7 @@ class SubCategory extends Category
             if ($parent->has_items) {
                 throw new \Exception('This parent can\'t have a category child');
             }
-            if ($parent->level >= Category::$maxCategoryLevel) {
+            if ($parent->level > Category::$maxCategoryLevel) {
                 throw new \Exception('Can\'t create a category of this level');
             }
         }

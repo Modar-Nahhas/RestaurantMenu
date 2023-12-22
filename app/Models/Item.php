@@ -15,21 +15,34 @@ class Item extends ApiModel
         parent::boot();
         self::creating(function (Item $item) {
             $item->validateCreation();
+            $item->checkValidDiscount([
+                DiscountTypeEnum::Item
+            ]);
             $item->handleDiscount();
         });
 
         self::created(function (Item $item) {
-            $item->category()->update([
+            $item->category()->where('has_items', false)->update([
                 'has_items' => true
             ]);
         });
 
         self::updating(function (Item $item) {
             if ($item->isDirty('discount_id')) {
+                $item->checkValidDiscount([
+                    DiscountTypeEnum::Category,
+                    DiscountTypeEnum::Item,
+                ]);
                 $item->handleDiscount();
             }
         });
     }
+
+    protected $casts = [
+        'discount_id' => 'int',
+        'category_id' => 'int',
+        'price' => 'decimal:2'
+    ];
 
     protected $fillable = [
         'name',
@@ -46,11 +59,11 @@ class Item extends ApiModel
     public function price(): Attribute
     {
         return Attribute::make(
-            get: fn($price) => $price - $this->discountValue
+            get: fn($price) => $price - $this->discount_Value
         );
     }
 
-    public function getDiscountValueAttribute(): int
+    public function getDiscountValueAttribute(): float
     {
         $price = $this->getAttributes()['price'];
         $discountAmount = isset($this->discount_id) ? $this->discount->amount : 0;
@@ -67,15 +80,12 @@ class Item extends ApiModel
         return $this->belongsTo(Category::class);
     }
 
-    private function checkValidDiscount(): void
+    private function checkValidDiscount(array $allowedTypes): void
     {
         if (isset($this->discount_id)) {
             $validDiscount = Discount::query()
                 ->where('id', $this->discount_id)
-                ->whereIn('type', [
-                    DiscountTypeEnum::Category,
-                    DiscountTypeEnum::Item
-                ])
+                ->whereIn('type', $allowedTypes)
                 ->exists();
             if (!$validDiscount) {
                 throw new \Exception('Invalid discount for item');
@@ -95,7 +105,6 @@ class Item extends ApiModel
 
     private function handleDiscount(): void
     {
-        $this->checkValidDiscount();
         if (!isset($this->discount_id) && isset($this->category->discount_id)) {
             $this->discount_id = $this->category->discount_id;
         }

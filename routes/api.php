@@ -24,34 +24,35 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::apiResource('/categories', CategoryController::class)->only([
     'index'
 ]);
-Route::apiResource('/sub-categories', CategoryController::class)->only([
+Route::apiResource('/sub-categories', SubCategoryController::class)->only([
     'index'
 ]);
-Route::apiResource('/discounts', CategoryController::class)->only([
+Route::apiResource('/discounts', DiscountController::class)->only([
     'index'
 ]);
-Route::apiResource('/items', CategoryController::class)->only([
+Route::apiResource('/items', ItemController::class)->only([
     'index'
 ]);
-Route::apiResource('/menus', CategoryController::class)->only([
+Route::apiResource('/menus', MenuController::class)->only([
     'index'
 ]);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
     Route::get('/categories/valid-parents', [CategoryController::class, 'getValidParentCategories']);
+    Route::get('/categories/valid-items', [CategoryController::class, 'getValidItemCategories']);
     Route::apiResource('/categories', CategoryController::class)->only([
         'store'
     ]);
-    Route::apiResource('/sub-categories', CategoryController::class)->only([
+    Route::apiResource('/sub-categories', SubCategoryController::class)->only([
         'store'
     ]);
-    Route::apiResource('/discounts', CategoryController::class)->only([
+    Route::apiResource('/discounts', DiscountController::class)->only([
         'store'
     ]);
-    Route::apiResource('/items', CategoryController::class)->only([
+    Route::apiResource('/items', ItemController::class)->only([
         'store'
     ]);
-    Route::apiResource('/menus', CategoryController::class)->only([
+    Route::apiResource('/menus', MenuController::class)->only([
         'store'
     ]);
 });

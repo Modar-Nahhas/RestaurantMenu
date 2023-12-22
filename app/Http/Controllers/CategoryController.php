@@ -36,4 +36,13 @@ class CategoryController extends Controller
         return self::getJsonResponse('Success',$validParentCategories);
     }
 
+    public function getValidItemCategories()
+    {
+        $data['list'] = true;
+        $validParentCategories = Category::query()
+            ->whereDoesntHave('children')
+            ->getData($data);
+        return self::getJsonResponse('Success',$validParentCategories);
+    }
+
 }

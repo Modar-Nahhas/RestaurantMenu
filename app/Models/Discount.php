@@ -6,6 +6,10 @@ use Mapi\Easyapi\Models\ApiModel;
 
 class Discount extends ApiModel
 {
+
+    protected $casts = [
+        'amount' => 'decimal:2'
+    ];
     protected $fillable = [
         'name',
         'amount',
