@@ -28,12 +28,19 @@ class CategoryController extends Controller
         return self::getJsonResponse('Success', $newCategory);
     }
 
+    public function update(CategoryRequest $request, Category $category)
+    {
+        $data = $request->validated();
+        $category->update($data);
+        return self::getJsonResponse('Success', $category);
+    }
+
     public function getValidParentCategories()
     {
         $data['where_has_items'] = false;
         $data['list'] = true;
         $validParentCategories = Category::query()->filter($data)->getData($data);
-        return self::getJsonResponse('Success',$validParentCategories);
+        return self::getJsonResponse('Success', $validParentCategories);
     }
 
     public function getValidItemCategories()
@@ -42,7 +49,7 @@ class CategoryController extends Controller
         $validParentCategories = Category::query()
             ->whereDoesntHave('children')
             ->getData($data);
-        return self::getJsonResponse('Success',$validParentCategories);
+        return self::getJsonResponse('Success', $validParentCategories);
     }
 
 }

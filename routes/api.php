@@ -41,10 +41,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/categories/valid-parents', [CategoryController::class, 'getValidParentCategories']);
     Route::get('/categories/valid-items', [CategoryController::class, 'getValidItemCategories']);
     Route::apiResource('/categories', CategoryController::class)->only([
-        'store'
+        'store', 'update'
     ]);
     Route::apiResource('/sub-categories', SubCategoryController::class)->only([
-        'store'
+        'store', 'update'
     ]);
     Route::apiResource('/discounts', DiscountController::class)->only([
         'store'
@@ -53,6 +53,6 @@ Route::middleware('auth:sanctum')->group(function () {
         'store'
     ]);
     Route::apiResource('/menus', MenuController::class)->only([
-        'store','update'
+        'store', 'update'
     ]);
 });
