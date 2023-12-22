@@ -51,7 +51,6 @@ class Handler extends ExceptionHandler
                 default:
                     return Controller::getJsonResponse($e->getMessage(), null, false, 500, $e);
 
-
             }
         });
     }

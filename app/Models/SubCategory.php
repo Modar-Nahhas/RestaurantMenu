@@ -11,7 +11,7 @@ class SubCategory extends Category
     protected static function boot()
     {
         parent::boot();
-        self::addGlobalScope(SubCategoryScope::class);
+        self::addGlobalScope(new SubCategoryScope());
 
         static::creating(function (SubCategory $subCategory) {
             $subCategory->load('parent');

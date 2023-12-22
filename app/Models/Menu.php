@@ -13,7 +13,7 @@ class Menu extends ApiModel
     protected static function boot()
     {
         parent::boot();
-        static::addGlobalScope(MenuScope::class);
+        static::addGlobalScope(new MenuScope());
 
         static::creating(function (Menu $menu) {
             $menu->checkValidDiscount();
