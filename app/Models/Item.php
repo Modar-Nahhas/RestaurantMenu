@@ -18,8 +18,14 @@ class Item extends ApiModel
             $item->handleDiscount();
         });
 
+        self::created(function (Item $item) {
+            $item->category()->update([
+                'has_items' => true
+            ]);
+        });
+
         self::updating(function (Item $item) {
-            if($item->isDirty('discount_id')){
+            if ($item->isDirty('discount_id')) {
                 $item->handleDiscount();
             }
         });
