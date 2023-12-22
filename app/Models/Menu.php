@@ -2,12 +2,19 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\MenuScope;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Mapi\Easyapi\Models\ApiModel;
 
 class Menu extends ApiModel
 {
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(MenuScope::class);
+    }
+
     protected $fillable = [
         'name',
         'discount_id',
