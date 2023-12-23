@@ -3,7 +3,8 @@ import {createStore} from 'vuex'
 const store = createStore({
     state() {
         return {
-            userInfo: null
+            userInfo: null,
+            callingApi: false
         }
     },
     getters: {
@@ -15,19 +16,25 @@ const store = createStore({
         },
         isLoggedin(state) {
             return state.userInfo != undefined;
+        },
+        isCallingApi(state) {
+            return state.callingApi;
         }
     },
     mutations: {
         userLogin: (state, {userInfo}) => {
-            localStorage.setItem('userInfo',JSON.stringify(userInfo))
+            localStorage.setItem('userInfo', JSON.stringify(userInfo))
             state.userInfo = userInfo;
         },
         userLogout: state => {
             localStorage.removeItem('userInfo')
             state.userInfo = null;
         },
-        resetUserInfoFromStorage: state =>{
+        resetUserInfoFromStorage: state => {
             state.userInfo = JSON.parse(localStorage.getItem('userInfo'))
+        },
+        callApi: (state, {calling}) => {
+            state.callingApi = calling;
         }
     },
 });

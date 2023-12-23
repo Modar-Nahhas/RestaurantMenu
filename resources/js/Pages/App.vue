@@ -6,7 +6,7 @@ import store from "@/Plugins/Store.js";
 import {setAxiosToken} from "@/Pages/ApiHandlers/Helpers/AxiosHandler.js";
 import NavigationDrawer from "@/Pages/Shared/NavigationDrawer.vue";
 import MyBtn from "@/Pages/Shared/Components/MyBtn.vue";
-import MainLayout from "@/Pages/Shared/MainLayout.vue";
+import MyProgress from "@/Pages/Shared/Components/MyProgress.vue";
 
 const appName = import.meta.env.VITE_APP_NAME;
 let pageHeader = ref(localStorage.getItem('pageHeader') ?? 'Home');
@@ -25,8 +25,18 @@ onMounted(() => {
 </script>
 
 <template>
-    <v-app class="rounded rounded-md">
+    <v-app class="rounded rounded-md" app>
         <Notifications group="public" position="center"/>
+
+        <my-progress
+            v-if="store.getters.isCallingApi"
+            class="position-absolute"
+            style="z-index:10000;"
+            indeterminate
+            color="primary"
+            :spinner="false"
+            text=""
+        ></my-progress>
         <template v-if="store.getters.isLoggedin">
             <v-app-bar :title="appName">
                 <div class="me-5">Welcome, {{ store.getters.getUser.name }}...</div>

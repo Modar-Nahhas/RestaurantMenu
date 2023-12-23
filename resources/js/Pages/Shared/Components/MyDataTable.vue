@@ -2,18 +2,19 @@
 import {onMounted, ref} from "vue";
 import {dateFormatter} from "../../ApiHandlers/Helpers/Helpers.js";
 import MyBtn from "@/Pages/Shared/Components/MyBtn.vue";
+import MyProgress from "@/Pages/Shared/Components/MyProgress.vue";
 
 const props = defineProps({
     headers: Array,
     apiFunction: Function,
-    apiParams:Object,
-    showAdd:{
-        default:true,
-        type:Boolean
+    apiParams: Object,
+    showAdd: {
+        default: true,
+        type: Boolean
     }
 })
 
-let itemsPerPageOptions = [1, 5, 10, 20, 100,-1];
+let itemsPerPageOptions = [1, 5, 10, 20, 100, -1];
 
 
 let loadingData = ref(false)
@@ -45,6 +46,10 @@ onMounted(() => {
 <template>
     <v-layout>
         <my-btn v-if="showAdd">Add</my-btn>
+        <v-spacer></v-spacer>
+        <div @click="loadItems(tableParameters)" style="cursor: pointer;">
+            <v-icon color="primary">mdi-reload</v-icon>
+        </div>
     </v-layout>
     <v-data-table-server
         v-model:items-per-page="tableParameters.itemsPerPage"
@@ -57,8 +62,11 @@ onMounted(() => {
         :items-per-page-options="itemsPerPageOptions"
         @update:options="loadItems"
     >
-        <template v-slot:item.created_at="{item}" >
-            {{dateFormatter(item.created_at)}}
+        <template v-slot:item.created_at="{item}">
+            {{ dateFormatter(item.created_at) }}
+        </template>
+        <template v-slot:loader="{color,isActive}">
+            <my-progress v-if="isActive" :spinner="false" text=""></my-progress>
         </template>
     </v-data-table-server>
 </template>

@@ -1,25 +1,33 @@
 import axios from "axios";
 import router from "@/Plugins/Router.js";
 import store from "@/Plugins/Store.js";
+
 window.axios = axios;
 window.axios.defaults.baseURL = window.location.origin
-window.axios.interceptors.response.use(function (response) {
 
+window.axios.interceptors.request.use(function (config) {
+    store.commit('callApi', {calling: true})
+    return config;
+})
+window.axios.interceptors.response.use(function (response) {
+    store.commit('callApi', {calling: false})
     return response;
 }, function (error) {
-    if(error.response.data.code == 401){
+    if (error.response.data.code == 401) {
         store.commit('userLogout')
-        router.push({name:'login'})
+        router.push({name: 'login'})
     }
     return error.response;
 });
-export function setAxiosToken(token){
+
+export function setAxiosToken(token) {
     window.axios.defaults.headers.common = {'Authorization': `Bearer ` + token}
 }
+
 export async function axiosGetRequest(url) {
 
     let res = await window.axios.request({
-        url:  url,
+        url: url,
         method: 'GET',
         'headers': {
             'accept': 'application/json',
