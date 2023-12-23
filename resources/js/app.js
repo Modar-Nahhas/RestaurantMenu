@@ -6,7 +6,7 @@ import Store from "@/Plugins/Store.js";
 import Notifications from "@kyvg/vue3-notification";
 
 const app = createApp(App)
-
+app.config.devtools = true
 app.use(Store)
     .use(Router)
     .use(Vuetify)

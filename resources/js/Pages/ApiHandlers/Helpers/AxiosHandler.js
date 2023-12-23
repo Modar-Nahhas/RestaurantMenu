@@ -1,8 +1,18 @@
 import axios from "axios";
+import router from "@/Plugins/Router.js";
+import store from "@/Plugins/Store.js";
 window.axios = axios;
-// window.axios.defaults.withCredentials = true;
 window.axios.defaults.baseURL = window.location.origin
+window.axios.interceptors.response.use(function (response) {
 
+    return response;
+}, function (error) {
+    if(error.response.data.code == 401){
+        store.commit('userLogout')
+        router.push({name:'login'})
+    }
+    return error.response;
+});
 export function setAxiosToken(token){
     window.axios.defaults.headers.common = {'Authorization': `Bearer ` + token}
 }
