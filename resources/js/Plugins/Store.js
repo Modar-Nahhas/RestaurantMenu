@@ -4,7 +4,12 @@ const store = createStore({
     state() {
         return {
             userInfo: null,
-            callingApi: false
+            callingApi: false,
+            discountTypes: {
+                category: 'category',
+                item: 'item',
+                allMenu: 'all_menu'
+            }
         }
     },
     getters: {

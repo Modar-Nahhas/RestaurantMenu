@@ -42,7 +42,8 @@ class Category extends ApiModel
     ];
 
     protected $allowedRelationsToLoad = [
-        'parent' => ['id', 'name']
+        'parent' => ['id', 'name'],
+        'discount' => ['id', 'amount'],
     ];
 
     public function discount(): BelongsTo

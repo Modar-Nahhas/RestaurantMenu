@@ -20,6 +20,9 @@ class Discount extends ApiModel
         'formatted_type'
     ];
 
+    protected $listColumnsToRetrieve = [
+        'id', 'name'
+    ];
     protected $allowedFilters = [
         'type'
     ];

@@ -13,6 +13,7 @@ window.axios.interceptors.response.use(function (response) {
     store.commit('callApi', {calling: false})
     return response;
 }, function (error) {
+    store.commit('callApi', {calling: false})
     if (error.response.data.code == 401) {
         store.commit('userLogout')
         router.push({name: 'login'})

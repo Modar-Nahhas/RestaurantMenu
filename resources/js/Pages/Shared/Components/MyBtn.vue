@@ -11,12 +11,19 @@
         v-bind:attrs="$attrs"
     >
         <slot></slot>
+        <my-progress v-if="disable"
+                     style="width: 13% !important;height: 13%;"
+                     class="" text=""
+        ></my-progress>
     </v-btn>
 </template>
 
 <script>
+import MyProgress from "@/Pages/Shared/Components/MyProgress.vue";
+
 export default {
     name: "MyBtn",
+    components: {MyProgress},
     props: {
         small: {
             default: false,
@@ -55,6 +62,7 @@ export default {
         submit() {
             if (this.disableOnClick)
                 this.disable = true;
+            // this.$emit()
         }
     }
 }

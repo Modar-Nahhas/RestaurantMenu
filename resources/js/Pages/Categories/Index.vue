@@ -23,6 +23,12 @@ const headers = [
         key: 'parent.name',
     },
     {
+        title: 'Discount',
+        align: 'center',
+        sortable: false,
+        key: 'discount.amount',
+    },
+    {
         title: 'Creation date',
         align: 'center',
         sortable: false,
@@ -38,8 +44,10 @@ const headers = [
             :headers="headers"
             :api-function="useCategoryIndexApi"
             :api-params="{
-                with_parent:true
+                with_parent:true,
+                with_discount:true,
             }"
+            add-link-name="categories_store"
         ></my-data-table>
     </v-container>
 </template>

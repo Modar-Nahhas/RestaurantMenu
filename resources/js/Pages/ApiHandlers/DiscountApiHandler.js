@@ -8,6 +8,7 @@ const baseUrl = "api/discounts"
 export async function useDiscountIndexApi(params = {
     number: 5,
     page: 1,
+    where_type: null
 }) {
     let data = ref([]);
 

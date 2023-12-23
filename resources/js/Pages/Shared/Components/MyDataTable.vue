@@ -3,6 +3,7 @@ import {onMounted, ref} from "vue";
 import {dateFormatter} from "../../ApiHandlers/Helpers/Helpers.js";
 import MyBtn from "@/Pages/Shared/Components/MyBtn.vue";
 import MyProgress from "@/Pages/Shared/Components/MyProgress.vue";
+import {useRedirect} from "@/Pages/Composable/RoutingHelpers.js";
 
 const props = defineProps({
     headers: Array,
@@ -11,7 +12,8 @@ const props = defineProps({
     showAdd: {
         default: true,
         type: Boolean
-    }
+    },
+    addLinkName:String
 })
 
 let itemsPerPageOptions = [1, 5, 10, 20, 100, -1];
@@ -45,7 +47,7 @@ onMounted(() => {
 
 <template>
     <v-layout>
-        <my-btn v-if="showAdd">Add</my-btn>
+        <my-btn v-if="showAdd" @click="useRedirect({name:addLinkName})">Add</my-btn>
         <v-spacer></v-spacer>
         <div @click="loadItems(tableParameters)" style="cursor: pointer;">
             <v-icon color="primary">mdi-reload</v-icon>
