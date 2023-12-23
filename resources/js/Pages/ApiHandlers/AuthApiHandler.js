@@ -18,7 +18,10 @@ export async function useLoginApi(params = {
         user.value = userInfo;
         setAxiosToken(userInfo.token);
         store.commit('userLogin', {userInfo});
-        router.push({name:'home'})
+        router.push({name:'main'})
+        return res;
+    }else{
+        return res;
     }
 }
 

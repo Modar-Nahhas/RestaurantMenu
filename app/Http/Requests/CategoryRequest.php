@@ -23,6 +23,7 @@ class CategoryRequest extends BaseRequest
     {
         if ($this->isMethod('get')) {
             return array_merge($this->getRules, [
+                'with_parent' => ['sometimes','boolean']
 
             ]);
         } elseif ($this->isMethod('post')) {

@@ -24,7 +24,7 @@ class ItemRequest extends BaseRequest
 
         if ($this->isMethod('get')) {
             return array_merge($this->getRules, [
-
+                'with_category' => ['sometimes', 'boolean']
             ]);
         } elseif ($this->isMethod('post')) {
             return [

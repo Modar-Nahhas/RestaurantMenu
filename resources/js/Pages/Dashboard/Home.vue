@@ -3,7 +3,7 @@
 </script>
 
 <template>
-<h2>This will be statistics</h2>
+<h2>Here will be statistics</h2>
 </template>
 
 <style scoped>

@@ -41,6 +41,10 @@ class Category extends ApiModel
         'id', 'name'
     ];
 
+    protected $allowedRelationsToLoad = [
+        'parent' => ['id', 'name']
+    ];
+
     public function discount(): BelongsTo
     {
         return $this->belongsTo(Discount::class);

@@ -44,6 +44,10 @@ class Menu extends ApiModel
         'totalValue'
     ];
 
+    protected $allowedRelationsToLoad = [
+        'discount' => ['id','amount']
+    ];
+
     public function getTotalValueAttribute(): float
     {
         $discountAmount = isset($this->discount_id) ? $this->discount->amount : 0;

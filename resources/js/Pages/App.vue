@@ -1,26 +1,51 @@
 <script setup>
 
-import { useNotifyUser} from "@/Pages/Composable/Notification.js";
+import {useLogoutApi} from "@/Pages/ApiHandlers/AuthApiHandler.js";
+import {onMounted, ref} from "vue";
+import store from "@/Plugins/Store.js";
+import {setAxiosToken} from "@/Pages/ApiHandlers/Helpers/AxiosHandler.js";
+import NavigationDrawer from "@/Pages/Shared/NavigationDrawer.vue";
+import MyBtn from "@/Pages/Shared/Components/MyBtn.vue";
+import MainLayout from "@/Pages/Shared/MainLayout.vue";
 
 const appName = import.meta.env.VITE_APP_NAME;
+let pageHeader = ref(localStorage.getItem('pageHeader') ?? 'Home');
 
+const setPageHeader = (header) => {
+    pageHeader.value = header;
+    localStorage.setItem('pageHeader', header)
+}
+
+onMounted(() => {
+    store.commit('resetUserInfoFromStorage');
+    if (store.getters.isLoggedin) {
+        setAxiosToken(store.getters.getUserToken);
+    }
+})
 </script>
 
 <template>
-    <v-layout class="rounded rounded-md">
+    <v-app class="rounded rounded-md">
         <Notifications group="public" position="center"/>
-        <v-app-bar :title="appName"></v-app-bar>
+        <template v-if="store.getters.isLoggedin">
+            <v-app-bar :title="appName">
+                <div class="me-5">Welcome, {{ store.getters.getUser.name }}...</div>
+                <my-btn @click="useLogoutApi" color="primary">Logout</my-btn>
+            </v-app-bar>
 
-        <v-navigation-drawer>
-            <v-list>
-                <v-list-item title="Navigation drawer"></v-list-item>
-            </v-list>
-        </v-navigation-drawer>
-
-        <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
-            <router-view></router-view>
+            <navigation-drawer app @linkChanged="setPageHeader"></navigation-drawer>
+        </template>
+        <v-main app>
+            <v-container class="d-flex flex-column">
+                <div id="header-title" v-if="store.getters.isLoggedin">
+                    <h2>{{ pageHeader }}</h2>
+                </div>
+                <div id="main-content">
+                    <router-view></router-view>
+                </div>
+            </v-container>
         </v-main>
-    </v-layout>
+    </v-app>
 </template>
 
 <style scoped>

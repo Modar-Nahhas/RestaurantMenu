@@ -16,7 +16,16 @@ class Discount extends ApiModel
         'type'
     ];
 
+    protected $appends = [
+        'formatted_type'
+    ];
+
     protected $allowedFilters = [
         'type'
     ];
+
+    public function getFormattedTypeAttribute(): string
+    {
+        return ucfirst(str_replace('_', ' ', $this->type));
+    }
 }

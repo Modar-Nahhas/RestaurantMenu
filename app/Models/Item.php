@@ -56,6 +56,10 @@ class Item extends ApiModel
         'discount_value'
     ];
 
+    protected $allowedRelationsToLoad = [
+        'category' => ['id', 'name']
+    ];
+
     public function price(): Attribute
     {
         return Attribute::make(

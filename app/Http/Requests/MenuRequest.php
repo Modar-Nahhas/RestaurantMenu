@@ -25,7 +25,7 @@ class MenuRequest extends BaseRequest
 
         if ($this->isMethod('get')) {
             return array_merge($this->getRules, [
-
+                'with_discount' => ['sometimes', 'boolean']
             ]);
         } elseif ($this->isMethod('post')) {
             return [
@@ -34,7 +34,7 @@ class MenuRequest extends BaseRequest
                 'items' => ['sometimes', 'array'],
                 'items.*' => ['bail', 'integer', 'min:1', 'exists:items,id']
             ];
-        }elseif ($this->isMethod('put')) {
+        } elseif ($this->isMethod('put')) {
             return [
                 'name' => ['somtimes', 'string'],
                 'discount_id' => ['bail', 'integer', 'min:1', 'exists:discounts,id'],
