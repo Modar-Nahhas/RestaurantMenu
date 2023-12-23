@@ -48,6 +48,7 @@ onMounted(() => {
 <template>
     <v-layout>
         <my-btn v-if="showAdd" @click="useRedirect({name:addLinkName})">Add</my-btn>
+        <slot name="customIndexActions"></slot>
         <v-spacer></v-spacer>
         <div @click="loadItems(tableParameters)" style="cursor: pointer;">
             <v-icon color="primary">mdi-reload</v-icon>

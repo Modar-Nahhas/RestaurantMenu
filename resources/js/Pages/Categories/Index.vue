@@ -2,6 +2,8 @@
 
 import MyDataTable from "@/Pages/Shared/Components/MyDataTable.vue";
 import {useCategoryIndexApi} from "@/Pages/ApiHandlers/CategoriesApiHandler.js";
+import {useRedirect} from "@/Pages/Composable/RoutingHelpers.js";
+import MyBtn from "@/Pages/Shared/Components/MyBtn.vue";
 
 const headers = [
     {
@@ -48,7 +50,11 @@ const headers = [
                 with_discount:true,
             }"
             add-link-name="categories_store"
-        ></my-data-table>
+        >
+            <template v-slot:customIndexActions>
+                <my-btn @click="useRedirect({name:'sub_category_store'})" class="ms-2">Add Sub-category</my-btn>
+            </template>
+        </my-data-table>
     </v-container>
 </template>
 

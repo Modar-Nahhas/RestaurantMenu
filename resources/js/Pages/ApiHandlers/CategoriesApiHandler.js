@@ -3,7 +3,8 @@ import {useNotifyUser} from "@/Pages/Composable/Notification.js";
 import {ref} from "vue";
 import {dataCleanser, queryFormatter, useTableParamsExtractor} from "@/Pages/ApiHandlers/Helpers/Helpers.js";
 
-const baseUrl = "api/categories"
+const categoryBaseUrl = "api/categories"
+const subCategoryBaseUrl = "api/sub-categories"
 
 export async function useCategoryIndexApi(params = {
     number: 5,
@@ -14,7 +15,7 @@ export async function useCategoryIndexApi(params = {
     let data = ref([]);
 
     let query = queryFormatter(params);
-    const res = await axiosGetRequest(baseUrl + query);
+    const res = await axiosGetRequest(categoryBaseUrl + query);
     if (res.status) {
         data.value = res.data.data ?? res.data;
         let {tableParams} = useTableParamsExtractor(res, params.number ?? -1);
@@ -29,18 +30,27 @@ export async function useCategoryStoreApi(params = {
     discount_id: null
 }) {
     let data = dataCleanser(params);
-    const res = await axiosPostRequest(baseUrl, data);
+    const res = await axiosPostRequest(categoryBaseUrl, data);
     useNotifyUser(res);
     return {res};
-    // if (res.status) {
-    //     return {validationErrors: false, success: true}
-    // } else {
-    //     if (res.code == 422) {
-    //         return {validationErrors: true, errors: res.data}
-    //     } else {
-    //         useNotifyUser(res);
-    //         return {validationErrors: false}
-    //     }
-    // }
+}
 
+export async function useSubCategoryStoreApi(params = {
+    name: null,
+    discount_id: null,
+    parent_id: null
+}) {
+    let data = dataCleanser(params);
+    const res = await axiosPostRequest(subCategoryBaseUrl, data);
+    useNotifyUser(res);
+    return {res};
+}
+
+export async function useGetValidCategoryParentsApi(){
+    const res = await axiosGetRequest('api/categories/valid-parents');
+    if (res.status) {
+        return res.data;
+    } else {
+        useNotifyUser(res);
+    }
 }

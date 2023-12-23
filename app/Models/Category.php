@@ -41,6 +41,10 @@ class Category extends ApiModel
         'id', 'name'
     ];
 
+    protected $allowedFilters = [
+        'has_items'
+    ];
+
     protected $allowedRelationsToLoad = [
         'parent' => ['id', 'name'],
         'discount' => ['id', 'amount'],
