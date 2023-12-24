@@ -32,7 +32,12 @@ class DiscountRequest extends BaseRequest
             return [
                 'name' => ['required', 'string'],
                 'type' => ['required', 'string', Rule::in(DiscountTypeEnum::values())],
-                'amount' => ['required', 'between:1,100']
+                'amount' => ['required','numeric', 'between:1,100']
+            ];
+        }elseif ($this->isMethod('put')) {
+            return [
+                'name' => ['required', 'string'],
+                'amount' => ['required','numeric', 'between:1,100']
             ];
         }
         return [];

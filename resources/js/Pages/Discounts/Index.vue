@@ -39,7 +39,6 @@ const headers = [
             :api-function="useDiscountIndexApi"
             add-link-name="discounts_store"
             edit-link-name="discounts_edit"
-            :show-actions="false"
         ></my-data-table>
     </v-container>
 </template>

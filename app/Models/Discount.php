@@ -24,7 +24,7 @@ class Discount extends ApiModel
         'id', 'name'
     ];
     protected $allowedFilters = [
-        'type'
+        'id', 'type'
     ];
 
     public function getFormattedTypeAttribute(): string

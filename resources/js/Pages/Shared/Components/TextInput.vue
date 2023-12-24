@@ -1,5 +1,3 @@
-
-
 <template>
     <v-text-field
         v-model="data"
@@ -8,8 +6,6 @@
         :error-messages="errorMessages"
         :placeholder="placeholder"
         :type="type"
-        :min="min"
-        :max="max"
         :append-icon="appendIcon"
         :clearable="clearable"
         dense
@@ -25,8 +21,6 @@ export default {
         label: String,
         type: String,
         placeholder: String,
-        min: Number | String,
-        max: Number | String,
         value: '',
         appendIcon: String,
         clearable: {

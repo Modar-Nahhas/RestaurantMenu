@@ -17,6 +17,14 @@ class DiscountController extends Controller
         return self::getJsonResponse('Success', $discounts);
     }
 
+    public function show(DiscountRequest $request, $id)
+    {
+        $data = $request->validated();
+        $data['where_id'] = $id;
+        $discount = Discount::query()->loadRelations($data)->filter($data)->firstOrFail();
+        return self::getJsonResponse('Success', $discount);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -25,6 +33,13 @@ class DiscountController extends Controller
         $data = $request->validated();
         $newDiscount = Discount::query()->create($data);
         return self::getJsonResponse('Success', $newDiscount);
+    }
+
+    public function update(DiscountRequest $request, Discount $discount)
+    {
+        $data = $request->validated();
+        $discount->update($data);
+        return self::getJsonResponse("Success", $discount);
     }
 
 }

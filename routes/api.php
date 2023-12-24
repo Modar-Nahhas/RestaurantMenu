@@ -46,8 +46,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/sub-categories', SubCategoryController::class)->only([
         'index', 'store'
     ]);
-    Route::apiResource('/discounts', DiscountController::class)->only([
-        'index', 'store'
+    Route::apiResource('/discounts', DiscountController::class)->except([
+        'destroy'
     ]);
     Route::apiResource('/items', ItemController::class)->only([
         'index', 'store'

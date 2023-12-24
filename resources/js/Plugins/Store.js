@@ -9,7 +9,8 @@ const store = createStore({
                 category: 'category',
                 item: 'item',
                 allMenu: 'all_menu'
-            }
+            },
+            discountAmountValidation: [value => (value > 0 && value <= 100) || 'Value should be between 0 and 100'],
         }
     },
     getters: {
