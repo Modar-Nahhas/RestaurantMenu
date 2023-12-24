@@ -34,6 +34,14 @@ class ItemRequest extends BaseRequest
                 'category_id' => ['bail', 'required', 'integer', 'min:1', 'exists:categories,id'],
                 'discount_id' => ['bail', 'integer', 'min:1', 'exists:discounts,id']
             ];
+        }elseif ($this->isMethod('put')) {
+            return [
+                'name' => ['sometimes', 'string'],
+                'description' => ['sometimes', 'string'],
+                'price' => ['sometimes', 'numeric', 'min:0'],
+                'category_id' => ['bail', 'sometimes', 'integer', 'min:1', 'exists:categories,id'],
+                'discount_id' => ['bail', 'integer', 'min:1', 'exists:discounts,id','nullable']
+            ];
         }
         return [];
     }

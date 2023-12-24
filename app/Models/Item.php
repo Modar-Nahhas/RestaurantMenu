@@ -57,7 +57,7 @@ class Item extends ApiModel
     ];
 
     protected $listColumnsToRetrieve = [
-        'id', 'name','price'
+        'id', 'name', 'price'
     ];
 
     protected $allowedRelationsToLoad = [
@@ -67,7 +67,7 @@ class Item extends ApiModel
     public function price(): Attribute
     {
         return Attribute::make(
-            get: fn($price) => $price - $this->discount_Value
+            get: fn($price) => number_format(($price - $this->discount_Value), 2, '.', '')
         );
     }
 

@@ -45,14 +45,14 @@ class Menu extends ApiModel
     ];
 
     protected $allowedRelationsToLoad = [
-        'discount' => ['id','amount']
+        'discount' => ['id', 'amount']
     ];
 
     public function getTotalValueAttribute(): float
     {
         $discountAmount = isset($this->discount_id) ? $this->discount->amount : 0;
         $totalValue = $this->items->sum('price');
-        return $totalValue - ($totalValue * ($discountAmount / 100));
+        return number_format(($totalValue - ($totalValue * ($discountAmount / 100))), 2, '.', '');
     }
 
     public function items(): BelongsToMany

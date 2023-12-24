@@ -1,5 +1,6 @@
 import Index from "@/Pages/Items/Index.vue";
 import Store from "@/Pages/Items/Store.vue";
+import Edit from "@/Pages/Items/Edit.vue";
 
 const itemsRoutes = [
     {
@@ -20,7 +21,7 @@ const itemsRoutes = [
     },
     {
         path: '/items/edit/:id',
-        component: Store,
+        component: Edit,
         name: 'items_edit',
         meta: {
             requireAuth: true

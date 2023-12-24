@@ -7,10 +7,13 @@ import {useDiscountIndexApi} from "@/Pages/ApiHandlers/DiscountApiHandler.js";
 import store from "@/Plugins/Store.js";
 import MyAutocomplete from "@/Pages/Shared/Components/MyAutocomplete.vue";
 import {useGetValidCategoryItemsApi} from "@/Pages/ApiHandlers/CategoriesApiHandler.js";
-import {useItemStoreApi} from "@/Pages/ApiHandlers/ItemsApiHandler.js";
+import {useItemShowApi, useItemStoreApi, useItemUpdateApi} from "@/Pages/ApiHandlers/ItemsApiHandler.js";
 import MyTextArea from "@/Pages/Shared/Components/MyTextArea.vue";
+import {useRoute} from "vue-router";
 
+const route = useRoute();
 
+let itemId = route.params.id;
 let item = ref({
     name: null,
     description: null,
@@ -32,9 +35,16 @@ onMounted(async () => {
         list: true
     });
     discounts.value = data.value;
+    discounts.value.unshift({
+        id: null,
+        name: 'None',
+    })
 
     data = await useGetValidCategoryItemsApi();
     categories.value = data;
+
+    data = await useItemShowApi(itemId, {});
+    item.value = data.data.value;
 })
 </script>
 
@@ -42,9 +52,11 @@ onMounted(async () => {
     <store-card
         title="Edit Item"
         :submission-data="item"
-        :submission-function="useItemStoreApi"
+        :submission-function="useItemUpdateApi"
         index-link-name="items_index"
         @validationError="setErrors"
+        :is-edit="true"
+        :item-id="itemId"
     >
         <v-row>
             <v-col cols="12">
