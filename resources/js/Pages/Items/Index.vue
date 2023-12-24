@@ -52,6 +52,9 @@ const headers = [
             :api-params="{
                 with_category:true
             }"
+            add-link-name="items_store"
+            edit-link-name="items_edit"
+            :show-actions="false"
         ></my-data-table>
     </v-container>
 </template>

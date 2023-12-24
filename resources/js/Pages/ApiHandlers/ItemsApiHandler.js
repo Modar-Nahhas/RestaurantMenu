@@ -1,14 +1,14 @@
-import {axiosGetRequest} from "@/Pages/ApiHandlers/Helpers/AxiosHandler.js";
+import {axiosGetRequest, axiosPostRequest} from "@/Pages/ApiHandlers/Helpers/AxiosHandler.js";
 import {useNotifyUser} from "@/Pages/Composable/Notification.js";
 import {ref} from "vue";
-import {queryFormatter, useTableParamsExtractor} from "@/Pages/ApiHandlers/Helpers/Helpers.js";
+import {dataCleanser, queryFormatter, useTableParamsExtractor} from "@/Pages/ApiHandlers/Helpers/Helpers.js";
 
 const baseUrl = "api/items"
 
 export async function useItemIndexApi(params = {
     number: 5,
     page: 1,
-    with_category:false
+    with_category: false
 }) {
     let data = ref([]);
 
@@ -23,6 +23,15 @@ export async function useItemIndexApi(params = {
     }
 }
 
-export async function useItemStoreApi() {
-
+export async function useItemStoreApi(params = {
+    name: null,
+    description: null,
+    price: null,
+    category_id: null,
+    discount_id: null
+}) {
+    let data = dataCleanser(params);
+    const res = await axiosPostRequest(baseUrl, data);
+    useNotifyUser(res);
+    return {res};
 }

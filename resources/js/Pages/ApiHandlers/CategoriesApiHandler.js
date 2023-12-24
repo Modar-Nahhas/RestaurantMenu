@@ -82,3 +82,11 @@ export async function useGetValidCategoryParentsApi() {
         useNotifyUser(res);
     }
 }
+export async function useGetValidCategoryItemsApi() {
+    const res = await axiosGetRequest('api/categories/valid-items');
+    if (res.status) {
+        return res.data;
+    } else {
+        useNotifyUser(res);
+    }
+}
