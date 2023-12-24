@@ -36,7 +36,7 @@ class MenuRequest extends BaseRequest
             ];
         } elseif ($this->isMethod('put')) {
             return [
-                'name' => ['somtimes', 'string'],
+                'name' => ['sometimes', 'string'],
                 'discount_id' => ['bail', 'integer', 'min:1', 'exists:discounts,id', 'nullable'],
                 'items' => ['sometimes', 'array'],
                 'items.*' => ['bail', 'integer', 'min:1', 'exists:items,id']

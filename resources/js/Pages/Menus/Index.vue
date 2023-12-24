@@ -50,7 +50,6 @@ const flatItems = (items) => {
             :api-params="{
                 with_discount:true
             }"
-            :show-actions="false"
             add-link-name="menus_store"
             edit-link-name="menus_edit"
         >

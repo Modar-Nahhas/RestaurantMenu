@@ -14,8 +14,16 @@ class MenuController extends Controller
     public function index(MenuRequest $request)
     {
         $data = $request->validated();
-        $discounts = Menu::query()->applyAllFilters($data);
-        return self::getJsonResponse('Success', $discounts);
+        $menus = Menu::query()->applyAllFilters($data);
+        return self::getJsonResponse('Success', $menus);
+    }
+
+    public function show(MenuRequest $request, $id)
+    {
+        $data = $request->validated();
+        $data['where_id'] = $id;
+        $menu = Menu::query()->loadRelations($data)->filter($data)->firstOrFail();
+        return self::getJsonResponse('Success', $menu);
     }
 
 

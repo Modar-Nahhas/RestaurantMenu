@@ -44,6 +44,10 @@ class Menu extends ApiModel
         'totalValue'
     ];
 
+    protected $allowedFilters = [
+        'id'
+    ];
+
     protected $allowedRelationsToLoad = [
         'discount' => ['id', 'amount']
     ];

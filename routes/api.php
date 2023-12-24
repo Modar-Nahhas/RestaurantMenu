@@ -52,7 +52,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/items', ItemController::class)->except([
         'destroy'
     ]);
-    Route::apiResource('/menus', MenuController::class)->only([
-        'index', 'store', 'update'
+    Route::apiResource('/menus', MenuController::class)->except([
+        'destroy'
     ]);
 });
