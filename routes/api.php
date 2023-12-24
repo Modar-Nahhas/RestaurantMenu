@@ -40,8 +40,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
     Route::get('/categories/valid-parents', [CategoryController::class, 'getValidParentCategories']);
     Route::get('/categories/valid-items', [CategoryController::class, 'getValidItemCategories']);
-    Route::apiResource('/categories', CategoryController::class)->only([
-        'index', 'store', 'update'
+    Route::apiResource('/categories', CategoryController::class)->except([
+        'destroy'
     ]);
     Route::apiResource('/sub-categories', SubCategoryController::class)->only([
         'index', 'store', 'update'

@@ -35,7 +35,7 @@ class CategoryRequest extends BaseRequest
         } elseif ($this->isMethod('put')) {
             return [
                 'name' => ['sometimes', 'string'],
-                'discount_id' => ['bail', 'integer', 'min:1', 'exists:discounts,id']
+                'discount_id' => ['bail', 'integer', 'min:1', 'exists:discounts,id','nullable']
             ];
         }
         return [];

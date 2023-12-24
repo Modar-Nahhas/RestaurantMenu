@@ -9,11 +9,20 @@ const props = defineProps({
     headers: Array,
     apiFunction: Function,
     apiParams: Object,
+    showActions: {
+        default: true,
+        type: Boolean
+    },
     showAdd: {
         default: true,
         type: Boolean
     },
-    addLinkName:String
+    showEdit: {
+        default: true,
+        type: Boolean
+    },
+    addLinkName: String,
+    editLinkName: String,
 })
 
 let itemsPerPageOptions = [1, 5, 10, 20, 100, -1];
@@ -26,6 +35,7 @@ let tableParameters = ref({
     itemsPerPage: 5,
     total: 10,
 });
+let tableHeaders = ref([])
 
 const loadItems = async (options) => {
     if (loadingData.value) return;
@@ -41,6 +51,16 @@ const loadItems = async (options) => {
 }
 
 onMounted(() => {
+    tableHeaders.value = props.headers
+    if (props.showActions) {
+        tableHeaders.value.push({
+            title: 'Action',
+            align: 'center',
+            sortable: false,
+            key: 'actions'
+
+        })
+    }
     loadItems(tableParameters);
 })
 </script>
@@ -56,7 +76,7 @@ onMounted(() => {
     </v-layout>
     <v-data-table-server
         v-model:items-per-page="tableParameters.itemsPerPage"
-        :headers="headers"
+        :headers="tableHeaders"
         :page="tableParameters.page"
         :items-length="tableParameters.total"
         :items="items"
@@ -67,6 +87,11 @@ onMounted(() => {
     >
         <template v-slot:item.created_at="{item}">
             {{ dateFormatter(item.created_at) }}
+        </template>
+        <template v-slot:item.actions="{item}">
+            <my-btn v-if="showEdit" :size="'small'" color="warning"
+                    @click="useRedirect({name:editLinkName,params:{id:item.id}})">Edit
+            </my-btn>
         </template>
         <template v-slot:loader="{color,isActive}">
             <my-progress v-if="isActive" :spinner="false" text=""></my-progress>

@@ -1,6 +1,7 @@
 import Index from "@/Pages/Categories/Index.vue";
 import Store from "@/Pages/Categories/Store.vue";
 import SubcategoryStore from "@/Pages/Categories/SubcategoryStore.vue";
+import Edit from "@/Pages/Categories/Edit.vue";
 
 const categoriesRoutes = [
     {
@@ -15,6 +16,14 @@ const categoriesRoutes = [
         path: '/categories/store',
         component: Store,
         name: 'categories_store',
+        meta: {
+            requireAuth: true
+        }
+    },
+    {
+        path: '/categories/edit/:id',
+        component: Edit,
+        name: 'categories_edit',
         meta: {
             requireAuth: true
         }

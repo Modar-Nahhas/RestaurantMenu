@@ -6,8 +6,7 @@
         @click="submit"
         :disabled="disable"
         :color="color"
-        :small="small"
-        :x-small="xSmall"
+        :size="size"
         v-bind:attrs="$attrs"
     >
         <slot></slot>
@@ -25,13 +24,9 @@ export default {
     name: "MyBtn",
     components: {MyProgress},
     props: {
-        small: {
-            default: false,
-            type: Boolean
-        },
-        xSmall: {
-            default: false,
-            type: Boolean
+        size: {
+            default: undefined,
+            type: String
         },
         color: {
             default: 'primary',

@@ -18,6 +18,14 @@ class CategoryController extends Controller
         return self::getJsonResponse('Success', $categories);
     }
 
+    public function show(CategoryRequest $request, $id)
+    {
+        $data = $request->validated();
+        $data['where_id'] = $id;
+        $category = Category::query()->loadRelations($data)->filter($data)->firstOrfail();
+        return self::getJsonResponse('Success', $category);
+    }
+
     /**
      * Store a newly created resource in storage.
      */

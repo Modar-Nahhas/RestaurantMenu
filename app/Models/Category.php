@@ -42,7 +42,7 @@ class Category extends ApiModel
     ];
 
     protected $allowedFilters = [
-        'has_items'
+        'id','has_items'
     ];
 
     protected $allowedRelationsToLoad = [

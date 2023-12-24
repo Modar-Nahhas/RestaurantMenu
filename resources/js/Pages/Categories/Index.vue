@@ -50,6 +50,7 @@ const headers = [
                 with_discount:true,
             }"
             add-link-name="categories_store"
+            edit-link-name="categories_edit"
         >
             <template v-slot:customIndexActions>
                 <my-btn @click="useRedirect({name:'sub_category_store'})" class="ms-2">Add Sub-category</my-btn>

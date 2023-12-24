@@ -1,7 +1,6 @@
 <script setup>
 import {ref} from "vue";
 import MyBtn from "@/Pages/Shared/Components/MyBtn.vue";
-import {useCategoryStoreApi} from "@/Pages/ApiHandlers/CategoriesApiHandler.js";
 import {useRedirect} from "@/Pages/Composable/RoutingHelpers.js";
 
 const props = defineProps({
@@ -20,7 +19,12 @@ const props = defineProps({
     submissionData: {
         type: Object,
         required: true
-    }
+    },
+    isEdit: {
+        default: false,
+        type: Boolean,
+    },
+    itemId: [String , Number]
 })
 
 const emit = defineEmits({
@@ -33,7 +37,13 @@ const emit = defineEmits({
 let loading = ref(false);
 const submitForm = async () => {
     loading.value = true;
-    const {res} = await props.submissionFunction(props.submissionData);
+    let res = {};
+    if (props.isEdit) {
+        res = await props.submissionFunction(props.itemId, props.submissionData);
+    } else {
+        res = await props.submissionFunction(props.submissionData);
+    }
+    res = res.res;
     loading.value = false;
     if (res.status && res.code == 200) {
         useRedirect({name: props.indexLinkName})
