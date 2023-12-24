@@ -56,6 +56,10 @@ class Item extends ApiModel
         'discount_value'
     ];
 
+    protected $listColumnsToRetrieve = [
+        'id', 'name','price'
+    ];
+
     protected $allowedRelationsToLoad = [
         'category' => ['id', 'name']
     ];

@@ -16,7 +16,7 @@
         :search-input.sync="search"
         :chips="chips"
         :clearable="clearable"
-        :deletable-chips="deletableChips"
+        :closable-chips="deletableChips"
         :return-object="returnObject"
         :disabled="disabled"
         outlined

@@ -34,6 +34,9 @@ const headers = [
             :api-params="{
                 with_discount:true
             }"
+            :show-actions="false"
+            add-link-name="menus_store"
+            edit-link-name="menus_edit"
         ></my-data-table>
     </v-container>
 </template>

@@ -1,4 +1,5 @@
 import Index from "@/Pages/Menus/Index.vue";
+import Store from "@/Pages/Menus/Store.vue";
 
 
 const menusRoutes = [
@@ -9,7 +10,15 @@ const menusRoutes = [
         meta: {
             requireAuth: true
         }
-    }
+    },
+    {
+        path: '/menus/store',
+        component: Store,
+        name: 'menus_store',
+        meta: {
+            requireAuth: true
+        }
+    },
 ]
 
 export default  menusRoutes;

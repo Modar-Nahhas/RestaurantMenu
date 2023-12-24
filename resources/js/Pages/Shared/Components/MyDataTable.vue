@@ -85,6 +85,12 @@ onMounted(() => {
         :items-per-page-options="itemsPerPageOptions"
         @update:options="loadItems"
     >
+        <template
+            v-for="(_, scopedSlotName) in $scopedSlots"
+            v-slot:[scopedSlotName]="slotData"
+        >
+            <slot :name="scopedSlotName" v-bind="slotData" />
+        </template>
         <template v-slot:item.created_at="{item}">
             {{ dateFormatter(item.created_at) }}
         </template>
@@ -96,6 +102,7 @@ onMounted(() => {
         <template v-slot:loader="{color,isActive}">
             <my-progress v-if="isActive" :spinner="false" text=""></my-progress>
         </template>
+<!--        <slot name=""-->
     </v-data-table-server>
 </template>
 
