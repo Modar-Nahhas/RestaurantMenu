@@ -86,7 +86,7 @@ onMounted(() => {
         @update:options="loadItems"
     >
         <template
-            v-for="(_, scopedSlotName) in $scopedSlots"
+            v-for="(_, scopedSlotName) in $slots"
             v-slot:[scopedSlotName]="slotData"
         >
             <slot :name="scopedSlotName" v-bind="slotData" />

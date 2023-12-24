@@ -17,6 +17,18 @@ const headers = [
         key: 'discount.amount',
     },
     {
+        title: 'Items',
+        align: 'center',
+        sortable: false,
+        key: 'items',
+    },
+    {
+        title: 'Total Value',
+        align: 'center',
+        sortable: false,
+        key: 'totalValue',
+    },
+    {
         title: 'Creation date',
         align: 'center',
         sortable: false,
@@ -24,6 +36,10 @@ const headers = [
     },
 
 ]
+
+const flatItems = (items) => {
+    return items.map(item => item.name).join(",")
+}
 </script>
 
 <template>
@@ -37,7 +53,11 @@ const headers = [
             :show-actions="false"
             add-link-name="menus_store"
             edit-link-name="menus_edit"
-        ></my-data-table>
+        >
+            <template v-slot:item.items="{item}">
+                {{ flatItems(item.items) }}
+            </template>
+        </my-data-table>
     </v-container>
 </template>
 
