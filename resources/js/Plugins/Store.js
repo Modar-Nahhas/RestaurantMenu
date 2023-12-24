@@ -6,7 +6,7 @@ const store = createStore({
             userInfo: null,
             callingApi: false,
             discountTypes: {
-                category: 'item',
+                category: 'category',
                 item: 'item',
                 allMenu: 'all_menu'
             }

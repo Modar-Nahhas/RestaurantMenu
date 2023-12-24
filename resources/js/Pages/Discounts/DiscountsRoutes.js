@@ -1,4 +1,5 @@
 import Index from "@/Pages/Discounts/Index.vue";
+import Store from "@/Pages/Discounts/Store.vue";
 
 const discountsRoutes = [
     {
@@ -8,7 +9,15 @@ const discountsRoutes = [
         meta: {
             requireAuth: true
         }
-    }
+    },
+    {
+        path: '/discounts/store',
+        component: Store,
+        name: 'discounts_store',
+        meta: {
+            requireAuth: true
+        }
+    },
 ]
 
 export default  discountsRoutes;

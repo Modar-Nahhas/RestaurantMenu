@@ -1,7 +1,7 @@
-import {axiosGetRequest} from "@/Pages/ApiHandlers/Helpers/AxiosHandler.js";
+import {axiosGetRequest, axiosPostRequest} from "@/Pages/ApiHandlers/Helpers/AxiosHandler.js";
 import {useNotifyUser} from "@/Pages/Composable/Notification.js";
 import {ref} from "vue";
-import {queryFormatter, useTableParamsExtractor} from "@/Pages/ApiHandlers/Helpers/Helpers.js";
+import {dataCleanser, queryFormatter, useTableParamsExtractor} from "@/Pages/ApiHandlers/Helpers/Helpers.js";
 
 const baseUrl = "api/discounts"
 
@@ -23,6 +23,13 @@ export async function useDiscountIndexApi(params = {
     }
 }
 
-export async function useDiscountStoreApi() {
-
+export async function useDiscountStoreApi(params = {
+    name: null,
+    type: null,
+    amount: null
+}) {
+    let data = dataCleanser(params);
+    const res = await axiosPostRequest(baseUrl, data);
+    useNotifyUser(res);
+    return {res};
 }
